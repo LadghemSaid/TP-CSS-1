@@ -1,0 +1,521 @@
+/* =====================================================================
+   TP1 — Cascade, couches et spécificité — FICHIER À COMPLÉTER
+   Module CSS avancé — L3 — Jour 1
+   ---------------------------------------------------------------------
+   Contraintes :
+   - INTERDIT : !important, modifier vendor.css, modifier index.html.
+   - AUTORISÉ : tout le reste… et surtout @layer, :where(), :has(),
+     revert-layer et le nesting natif.
+   Suivez les étapes de enonce.md : chaque bloc à toucher est marqué
+   « TODO étape N ».
+   ===================================================================== */
+
+
+/* TODO étape 1 — Déclarer l'ordre des couches ICI (avant l'import),
+   puis ranger vendor.css dans sa propre couche avec layer(…).
+   Ordre attendu : reset, vendor, base, layout, components, utilities */
+
+@import url("vendor.css");
+
+
+/* =====================================================================
+   RESET
+   TODO étape 2 — ranger ce bloc dans la couche « reset »
+                  et baisser sa spécificité à 0 avec :where()
+   ===================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body, h1, h2, h3, p, ol, ul, figure, fieldset {
+  margin: 0;
+}
+
+img, svg {
+  display: block;
+  max-inline-size: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+
+/* =====================================================================
+   BASE — tokens et éléments HTML nus
+   TODO étape 2 — ranger ce bloc dans la couche « base »
+   ===================================================================== */
+:root {
+  /* Couleurs */
+  --encre: #1f1b2e;
+  --encre-douce: #5b5670;
+  --fond: #fbf7f0;
+  --surface: #ffffff;
+  --ligne: #e6dfd3;
+  --accent: #e4572e;
+  --accent-fonce: #b83a17;
+  --sarcelle: #17a398;
+  --sarcelle-fonce: #0f6f68;
+  --danger: #c1121f;
+  --focus: #3a86ff;
+
+  /* Typo & formes */
+  --police: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --rayon: 1rem;
+  --rayon-s: 0.5rem;
+  --ombre: 0 1px 2px rgb(31 27 46 / 0.06), 0 8px 24px rgb(31 27 46 / 0.08);
+}
+
+/* Question piège pour l'étape 2 : même une fois rangée dans une couche
+   plus forte que vendor, cette police ne s'applique pas. Pourquoi ? */
+body {
+  font-family: var(--police);
+  color: var(--encre);
+  background: var(--fond);
+  line-height: 1.55;
+}
+
+h1, h2, h3 {
+  font-family: var(--police);
+  color: var(--encre);
+  text-transform: none;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 1.4rem + 3.5vw, 3.8rem);
+}
+
+h2 {
+  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.3rem);
+  margin-block-end: 0.5rem;
+}
+
+a {
+  color: var(--accent-fonce);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* Pas de puces sur les listes de mise en page… en théorie. */
+ul[class],
+ol[class] {
+  list-style: none;
+  padding: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+html {
+  scroll-padding-block-start: 5rem;
+}
+
+
+/* =====================================================================
+   LAYOUT
+   TODO étape 2 — ranger ce bloc dans la couche « layout »
+   ===================================================================== */
+.conteneur {
+  inline-size: min(100% - 2rem, 70rem);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+}
+
+.section__intro {
+  color: var(--encre-douce);
+  max-inline-size: 60ch;
+  margin-block-end: 1.5rem;
+}
+
+.cartes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  gap: 1.25rem;
+}
+
+
+/* =====================================================================
+   COMPONENTS
+   TODO étape 2 — ranger TOUT ce qui suit dans la couche « components »
+   ===================================================================== */
+
+/* --- En-tête ---------------------------------------------------------- */
+.site-header {
+  background: var(--encre);
+  color: #fff;
+}
+
+@media (width >= 48rem) {
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 10;
+  }
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  padding-block: 0.75rem;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.15rem;
+  text-decoration: none;
+}
+
+.nav__liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0;
+}
+
+/* « Ça marchait pas, j'ai mis !important et c'est bon. » — le stagiaire
+   TODO étape 1 — une fois les couches en place, SUPPRIMEZ ce !important. */
+.nav__lien {
+  display: block;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav__lien:hover {
+  background: rgb(255 255 255 / 0.12);
+}
+
+.nav__lien.is-active {
+  background: var(--accent);
+}
+
+/* --- Boutons ---------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 1.4rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--accent-fonce);
+}
+
+.btn.btn--ghost {
+  background: transparent;
+  color: var(--encre);
+}
+
+/* --- Hero ------------------------------------------------------------- */
+.hero {
+  background:
+    radial-gradient(circle at 85% 20%, rgb(23 163 152 / 0.18), transparent 40%),
+    radial-gradient(circle at 10% 90%, rgb(228 87 46 / 0.16), transparent 45%),
+    var(--fond);
+}
+
+.hero__inner {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (width >= 56rem) {
+  .hero__inner {
+    grid-template-columns: 1.6fr 1fr;
+  }
+}
+
+.hero__surtitre {
+  color: var(--sarcelle-fonce);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  margin-block-end: 0.75rem;
+}
+
+.hero__chapo {
+  font-size: 1.15rem;
+  color: var(--encre-douce);
+  max-inline-size: 52ch;
+  margin-block: 1.25rem 2rem;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hero__chiffres {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.hero__chiffres li {
+  background: var(--surface);
+  border-radius: var(--rayon);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--ombre);
+  color: var(--encre-douce);
+}
+
+.hero__chiffres strong {
+  display: block;
+  font-size: 2rem;
+  line-height: 1.1;
+  color: var(--encre);
+}
+
+/* --- Badge ------------------------------------------------------------ */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: var(--sarcelle-fonce);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-block-end: 0.6rem;
+}
+
+/* --- Titres des cartes et de l'agenda ---------------------------------
+   TODO étape 3 — Le titre « La Forêt des Lucioles » devrait être
+   vermillon (variante coup de cœur)… il ne l'est pas, même une fois
+   les couches en place. Calculez la spécificité des deux règles,
+   puis corrigez en changeant UN SEUL mot. */
+:is(#jeux, .agenda) .card-title {
+  color: var(--encre);
+  font-size: 1.25rem;
+  margin-block-end: 0.35rem;
+}
+
+.card--coup-de-coeur .card-title {
+  color: var(--accent-fonce);
+}
+
+/* --- Cartes de jeu -----------------------------------------------------
+   TODO étape 4 — Réécrire ces 7 règles en UNE SEULE règle .card { … }
+   avec le nesting natif (&:hover, & .card__corps, &.card--coup-de-coeur…). */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  overflow: hidden;
+  box-shadow: var(--ombre);
+  transition: translate 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  translate: 0 -4px;
+}
+
+.card .card__corps {
+  padding: 1.25rem 1.25rem 1.5rem;
+}
+
+.card .card__meta {
+  color: var(--sarcelle-fonce);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-block-end: 0.6rem;
+}
+
+.card .card__visuel {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.card.card--coup-de-coeur {
+  border: 2px solid var(--accent);
+}
+
+.card.card--coup-de-coeur .badge {
+  background: var(--accent);
+}
+
+/* TODO étape 5a — Carte SANS visuel (.card__visuel) : lui ajouter un
+   bandeau décoratif 16/9 (pseudo-élément ::before + dégradé) grâce
+   à :has(). Interdit d'ajouter une classe dans le HTML ! */
+
+
+/* --- Agenda ----------------------------------------------------------- */
+.agenda {
+  background: var(--surface);
+}
+
+.evenements {
+  display: grid;
+  gap: 1rem;
+  margin-block-start: 1.5rem;
+}
+
+.evenement {
+  display: grid;
+  gap: 0.25rem 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--rayon);
+  background: var(--fond);
+  border-inline-start: 6px solid var(--sarcelle);
+}
+
+@media (width >= 48rem) {
+  .evenement {
+    grid-template-columns: 13rem 1fr;
+  }
+
+  .evenement .evenement__date {
+    grid-row: span 2;
+  }
+
+  .evenement > :not(.evenement__date) {
+    grid-column: 2;
+  }
+}
+
+.evenement__date {
+  font-weight: 800;
+  color: var(--sarcelle-fonce);
+}
+
+.evenement p {
+  color: var(--encre-douce);
+}
+
+/* --- Formulaire de réservation ---------------------------------------- */
+.reservation__inner {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (width >= 56rem) {
+  .reservation__inner {
+    grid-template-columns: 1fr 1.4fr;
+    align-items: start;
+  }
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.25rem, 1rem + 2vw, 2rem);
+  background: var(--surface);
+  border: 2px solid var(--ligne);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+}
+
+.form .champ {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.form label {
+  font-weight: 600;
+}
+
+.form .champ__aide {
+  font-size: 0.85rem;
+  color: var(--encre-douce);
+}
+
+/* TODO étape 5b — Avec :has() (et :user-invalid / :required) :
+   1. ajouter une étoile « * » après le label des champs obligatoires ;
+   2. passer en rouge (label, bordure, aide) un .champ qui contient
+      un élément invalide ;
+   3. masquer .form__erreur par défaut, et l'afficher seulement quand
+      le FORMULAIRE contient au moins un champ invalide. */
+
+
+/* --- Zone partenaire -------------------------------------------------- */
+.partenaire {
+  background: var(--encre);
+  color: #fff;
+  padding-block: 2.5rem;
+}
+
+.partenaire h2 {
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.partenaire p {
+  color: rgb(255 255 255 / 0.8);
+}
+
+.partenaire__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* TODO étape 6 — Le contrat impose le style OFFICIEL de MégaKit pour
+   le bouton de cette zone. En UNE déclaration, annulez tout ce que
+   la couche components a décidé pour ce bouton (indice : revert-layer). */
+
+
+/* --- Pied de page ----------------------------------------------------- */
+.site-footer {
+  background: #15121f;
+  color: rgb(255 255 255 / 0.75);
+  padding-block: 2rem;
+  font-size: 0.95rem;
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+}
+
+.site-footer a {
+  color: #ffd1c2;
+}
+
+/* TODO EXERCICE D'APPROFONDISSEMENT (facultatif) — Styler les puces de filtre (.filtres, .filtres__puce)
+   et masquer les cartes qui ne correspondent pas au filtre coché,
+   sans JavaScript (indice : .jeux:has(#f-coop:checked) …). */
+
+
+/* =====================================================================
+   UTILITIES
+   TODO étape 2 — ranger ce bloc dans la couche « utilities »
+   ===================================================================== */
+.u-visuellement-cache {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

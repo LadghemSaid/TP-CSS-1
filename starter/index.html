@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Le Repaire des Dés — bar à jeux de société</title>
+  <meta name="description" content="Bar à jeux de société : plus de 120 jeux, des soirées à thème et des tables à réserver.">
+  <!--
+    TP1 — Cascade, couches et spécificité.
+    Vous ne modifiez PAS ce fichier HTML : tout se joue dans style.css.
+    vendor.css (la bibliothèque MégaKit UI) est importé depuis style.css.
+  -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app" class="mk-app">
+
+  <!-- ===================== EN-TÊTE ===================== -->
+  <header class="site-header">
+    <div class="conteneur site-header__inner">
+      <a class="logo" href="#">
+        <svg class="logo__icone" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="34" height="34" rx="8" fill="#e4572e"/>
+          <circle cx="13" cy="13" r="3.2" fill="#fff"/>
+          <circle cx="27" cy="13" r="3.2" fill="#fff"/>
+          <circle cx="20" cy="20" r="3.2" fill="#fff"/>
+          <circle cx="13" cy="27" r="3.2" fill="#fff"/>
+          <circle cx="27" cy="27" r="3.2" fill="#fff"/>
+        </svg>
+        <span class="logo__texte">Le Repaire des Dés</span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <ul class="nav__liste">
+          <li><a class="nav__lien is-active" href="#jeux" aria-current="page">Jeux</a></li>
+          <li><a class="nav__lien" href="#agenda">Agenda</a></li>
+          <li><a class="nav__lien" href="#reserver">Réserver</a></li>
+          <li><a class="nav__lien" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="section hero" id="hero" aria-labelledby="titre-hero">
+      <div class="conteneur hero__inner">
+        <div class="hero__texte">
+          <p class="hero__surtitre">Bar à jeux de société · Lille</p>
+          <h1 id="titre-hero">Lancez les dés, on s'occupe du reste.</h1>
+          <p class="hero__chapo">Plus de 120&nbsp;jeux, des animateurs qui expliquent les règles en trois minutes chrono, et des crêpes maison pour tenir jusqu'au dernier tour.</p>
+          <div class="hero__actions">
+            <a class="btn" href="#reserver">Réserver une table</a>
+            <a class="btn btn--ghost" href="#jeux">Voir les jeux</a>
+          </div>
+        </div>
+        <ul class="hero__chiffres">
+          <li><strong>120</strong> jeux en rayon</li>
+          <li><strong>14</strong> tables</li>
+          <li><strong>1&nbsp;h</strong> du matin le samedi</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== JEUX ===================== -->
+    <section class="section jeux" id="jeux" aria-labelledby="titre-jeux">
+      <div class="conteneur">
+        <h2 id="titre-jeux">Les jeux de la semaine</h2>
+        <p class="section__intro">Sélectionnés par l'équipe. Demandez-les au comptoir avec le numéro de table.</p>
+
+        <!-- Filtres (utilisés uniquement dans l'exercice d'approfondissement) -->
+        <fieldset class="filtres">
+          <legend class="u-visuellement-cache">Filtrer par type de jeu</legend>
+          <label class="filtres__puce"><input type="radio" name="filtre" id="f-tous" checked> Tous</label>
+          <label class="filtres__puce"><input type="radio" name="filtre" id="f-coop"> Coopératif</label>
+          <label class="filtres__puce"><input type="radio" name="filtre" id="f-ambiance"> Ambiance</label>
+          <label class="filtres__puce"><input type="radio" name="filtre" id="f-strategie"> Stratégie</label>
+        </fieldset>
+
+        <div class="cartes">
+          <article class="card card--coup-de-coeur" data-type="coop">
+            <svg class="card__visuel" viewBox="0 0 320 180" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="g-foret" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#1d3557"/>
+                  <stop offset="1" stop-color="#17a398"/>
+                </linearGradient>
+              </defs>
+              <rect width="320" height="180" fill="url(#g-foret)"/>
+              <path d="M40 180 L80 90 L120 180 Z M110 180 L160 70 L210 180 Z M190 180 L240 95 L290 180 Z" fill="#0b2a2a" opacity=".75"/>
+              <circle cx="70" cy="60" r="4" fill="#ffe66d"/>
+              <circle cx="210" cy="45" r="3" fill="#ffe66d"/>
+              <circle cx="260" cy="70" r="5" fill="#ffe66d"/>
+              <circle cx="150" cy="40" r="3.5" fill="#ffe66d"/>
+            </svg>
+            <div class="card__corps">
+              <span class="badge">Coup de cœur</span>
+              <h3 class="card-title">La Forêt des Lucioles</h3>
+              <p class="card__meta">Coopératif · 2 à 4&nbsp;joueurs · 45&nbsp;min</p>
+              <p>Ensemble, rallumez les lucioles avant que la nuit n'engloutisse la clairière. Parfait pour une première partie.</p>
+            </div>
+          </article>
+
+          <article class="card" data-type="ambiance">
+            <svg class="card__visuel" viewBox="0 0 320 180" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="g-marche" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ffb703"/>
+                  <stop offset="1" stop-color="#e4572e"/>
+                </linearGradient>
+              </defs>
+              <rect width="320" height="180" fill="url(#g-marche)"/>
+              <rect x="70" y="50" width="70" height="100" rx="8" fill="#fff" transform="rotate(-12 105 100)"/>
+              <rect x="125" y="40" width="70" height="100" rx="8" fill="#fff8f0"/>
+              <rect x="180" y="50" width="70" height="100" rx="8" fill="#fff" transform="rotate(12 215 100)"/>
+              <text x="160" y="100" text-anchor="middle" font-size="34" font-family="system-ui, sans-serif" font-weight="700" fill="#e4572e">?</text>
+            </svg>
+            <div class="card__corps">
+              <h3 class="card-title">Bluff au Marché</h3>
+              <p class="card__meta">Ambiance · 4 à 10&nbsp;joueurs · 20&nbsp;min</p>
+              <p>Vendez vos fruits pourris au prix fort sans vous faire démasquer. Fous rires garantis.</p>
+            </div>
+          </article>
+
+          <article class="card" data-type="strategie">
+            <svg class="card__visuel" viewBox="0 0 320 180" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="g-archipel" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#3a86ff"/>
+                  <stop offset="1" stop-color="#8ecae6"/>
+                </linearGradient>
+              </defs>
+              <rect width="320" height="180" fill="url(#g-archipel)"/>
+              <ellipse cx="90" cy="110" rx="45" ry="22" fill="#f4d58d"/>
+              <ellipse cx="200" cy="80" rx="55" ry="26" fill="#f4d58d"/>
+              <ellipse cx="260" cy="135" rx="30" ry="14" fill="#f4d58d"/>
+              <circle cx="200" cy="70" r="12" fill="#2a9d8f"/>
+              <circle cx="85" cy="102" r="9" fill="#2a9d8f"/>
+            </svg>
+            <div class="card__corps">
+              <h3 class="card-title">Archipel 7</h3>
+              <p class="card__meta">Stratégie · 2 à 4&nbsp;joueurs · 90&nbsp;min</p>
+              <p>Explorez sept îles, négociez vos ressources et bâtissez le port le plus prospère de l'archipel.</p>
+            </div>
+          </article>
+
+          <article class="card" data-type="ambiance">
+            <div class="card__corps">
+              <span class="badge">Nouveau</span>
+              <h3 class="card-title">Le Grand Quiz du Repaire</h3>
+              <p class="card__meta">Ambiance · 3 à 12&nbsp;joueurs · 30&nbsp;min</p>
+              <p>1&nbsp;500 questions écrites par l'équipe, de la pop culture aux sciences. Le visuel arrive bientôt&nbsp;!</p>
+            </div>
+          </article>
+
+          <article class="card" data-type="coop">
+            <svg class="card__visuel" viewBox="0 0 320 180" aria-hidden="true" focusable="false">
+              <defs>
+                <radialGradient id="g-lune" cx=".5" cy=".4" r=".8">
+                  <stop offset="0" stop-color="#5a4fcf"/>
+                  <stop offset="1" stop-color="#1f1b2e"/>
+                </radialGradient>
+              </defs>
+              <rect width="320" height="180" fill="url(#g-lune)"/>
+              <circle cx="230" cy="70" r="38" fill="#e9e3d5"/>
+              <circle cx="218" cy="60" r="7" fill="#cfc6b2"/>
+              <circle cx="245" cy="85" r="5" fill="#cfc6b2"/>
+              <path d="M90 140 L105 95 L120 140 Z" fill="#e4572e"/>
+              <rect x="98" y="140" width="14" height="10" fill="#ffb703"/>
+              <circle cx="40" cy="40" r="2" fill="#fff"/>
+              <circle cx="150" cy="30" r="1.5" fill="#fff"/>
+              <circle cx="290" cy="150" r="2" fill="#fff"/>
+            </svg>
+            <div class="card__corps">
+              <h3 class="card-title">Sauvetage Lunaire</h3>
+              <p class="card__meta">Coopératif · 1 à 5&nbsp;joueurs · 60&nbsp;min</p>
+              <p>Une base lunaire en panne, un équipage à rapatrier, et un compte à rebours qui ne pardonne pas.</p>
+            </div>
+          </article>
+
+          <article class="card" data-type="strategie">
+            <div class="card__corps">
+              <h3 class="card-title">Hexa-Royaume</h3>
+              <p class="card__meta">Stratégie · 2 à 3&nbsp;joueurs · 75&nbsp;min</p>
+              <p>Posez vos tuiles hexagonales, étendez votre royaume et surveillez les frontières de vos voisins.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== AGENDA ===================== -->
+    <section class="section agenda" id="agenda" aria-labelledby="titre-agenda">
+      <div class="conteneur">
+        <h2 id="titre-agenda">Agenda des soirées</h2>
+        <ol class="evenements">
+          <li class="evenement">
+            <time class="evenement__date" datetime="2026-11-06T19:00">ven. 6 nov. · 19&nbsp;h</time>
+            <h3 class="card-title">Tournoi «&nbsp;Roi du bluff&nbsp;»</h3>
+            <p>Élimination directe, lots pour les trois premières places. Inscription gratuite au comptoir.</p>
+          </li>
+          <li class="evenement">
+            <time class="evenement__date" datetime="2026-11-12T18:30">jeu. 12 nov. · 18&nbsp;h 30</time>
+            <h3 class="card-title">Soirée découverte coopératifs</h3>
+            <p>Des animateurs à chaque table pour vous faire jouer ensemble plutôt que les uns contre les autres.</p>
+          </li>
+          <li class="evenement">
+            <time class="evenement__date" datetime="2026-11-21T20:00">sam. 21 nov. · 20&nbsp;h</time>
+            <h3 class="card-title">Nuit des jeux de stratégie</h3>
+            <p>Parties longues jusqu'à 1&nbsp;h du matin. Venez avec votre jeu préféré, on fournit le café.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== RÉSERVATION ===================== -->
+    <section class="section reservation" id="reserver" aria-labelledby="titre-reserver">
+      <div class="conteneur reservation__inner">
+        <div>
+          <h2 id="titre-reserver">Réserver une table</h2>
+          <p class="section__intro">Réponse par e-mail sous 24&nbsp;h. Les champs marqués d'une étoile sont obligatoires.</p>
+        </div>
+        <form class="form" action="#" method="post" novalidate>
+          <p class="form__erreur" role="status">Oups&nbsp;! Certains champs sont à corriger avant d'envoyer.</p>
+          <div class="champ">
+            <label for="nom">Nom</label>
+            <input id="nom" name="nom" type="text" autocomplete="name" required>
+          </div>
+          <div class="champ">
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+            <p class="champ__aide">Exemple&nbsp;: camille@exemple.fr</p>
+          </div>
+          <div class="champ">
+            <label for="joueurs">Nombre de joueurs</label>
+            <input id="joueurs" name="joueurs" type="number" min="2" max="12" required>
+            <p class="champ__aide">Entre 2 et 12&nbsp;joueurs par table.</p>
+          </div>
+          <div class="champ">
+            <label for="date">Date</label>
+            <input id="date" name="date" type="date" required>
+          </div>
+          <div class="champ champ--large">
+            <label for="message">Un jeu à nous demander&nbsp;?</label>
+            <textarea id="message" name="message" rows="3"></textarea>
+          </div>
+          <button class="btn" type="submit">Envoyer la demande</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== ZONE PARTENAIRE ===================== -->
+    <aside class="partenaire" aria-labelledby="titre-partenaire">
+      <div class="conteneur partenaire__inner">
+        <div>
+          <h2 id="titre-partenaire">Offre partenaire MégaKit</h2>
+          <p>Le contrat de sponsoring impose que ce bouton garde l'apparence officielle de MégaKit UI.</p>
+        </div>
+        <button class="btn" type="button">Découvrir MégaKit</button>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ===================== PIED DE PAGE ===================== -->
+  <footer class="site-footer" id="contact">
+    <div class="conteneur site-footer__inner">
+      <p><strong>Le Repaire des Dés</strong> — 12 rue des Arts, Lille</p>
+      <p>Du mardi au dimanche, de 16&nbsp;h à minuit (1&nbsp;h le samedi).</p>
+      <p><a href="#hero">Retour en haut</a></p>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
